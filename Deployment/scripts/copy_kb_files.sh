@@ -2,7 +2,7 @@
 
 # Variables
 zipFileName="demo_data.zip"
-extractedFolder="userguides"
+extractedFolder="pubmed_articles"
 storageAccount="$1"
 fileSystem="$2"
 accountKey="$3"
