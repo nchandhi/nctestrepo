@@ -79,6 +79,12 @@ module uploadFiles 'deploy_upload_files_script.bicep' = {
 }
 
 // ========== Key Vault ========== //
+
+// clientId:clientId
+// clientSecret:clientSecret
+// environmentUrl:environmentUrl
+// environmentId:environmentId
+
 module keyvaultModule 'deploy_keyvault.bicep' = {
   name: 'deploy_keyvault'
   params: {
@@ -87,10 +93,6 @@ module keyvaultModule 'deploy_keyvault.bicep' = {
     objectId: managedIdentityModule.outputs.managedIdentityOutput.objectId
     tenantId: subscription().tenantId
     managedIdentityObjectId:managedIdentityModule.outputs.managedIdentityOutput.objectId
-    // clientId:clientId
-    // clientSecret:clientSecret
-    // environmentUrl:environmentUrl
-    // environmentId:environmentId
     adlsAccountName:storageAccountModule.outputs.storageAccountOutput.storageAccountName
     adlsStoreName:storageAccountModule.outputs.storageAccountOutput.storageAccountName
     openApiType:'azure'
