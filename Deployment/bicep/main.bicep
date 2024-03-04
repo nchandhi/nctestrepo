@@ -6,11 +6,11 @@ targetScope = 'resourceGroup'
 @description('Prefix Name')
 param solutionPrefix string
 
-param clientId string
-@secure()
-param clientSecret string
-param environmentUrl string
-param environmentId string
+// param clientId string
+// @secure()
+// param clientSecret string
+// param environmentUrl string
+// param environmentId string
 
 var solutionLocation = resourceGroup().location
 
