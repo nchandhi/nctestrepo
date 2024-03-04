@@ -38,32 +38,32 @@ module storageAccountModule 'deploy_storage_account.bicep' = {
   scope: resourceGroup(resourceGroup().name)
 }
 
-// // ========== Azure AI services multi-service account ========== //
-// module azAIMultiServiceAccount 'deploy_azure_ai_service_account.bicep' = {
-//   name: 'deploy_azure_ai_service_account'
-//   params: {
-//     solutionName: solutionPrefix
-//     solutionLocation: solutionLocation
-//   }
-// } 
+// ========== Azure AI services multi-service account ========== //
+module azAIMultiServiceAccount 'deploy_azure_ai_service.bicep' = {
+  name: 'deploy_azure_ai_service'
+  params: {
+    solutionName: solutionPrefix
+    solutionLocation: solutionLocation
+  }
+} 
 
-// // ========== Search service ========== //
-// module azSearchService 'deploy_azure_search_service.bicep' = {
-//   name: 'deploy_azure_search_service'
-//   params: {
-//     solutionName: solutionPrefix
-//     solutionLocation: solutionLocation
-//   }
-// } 
+// ========== Search service ========== //
+module azSearchService 'deploy_ai_search_service.bicep' = {
+  name: 'deploy_ai_search_service'
+  params: {
+    solutionName: solutionPrefix
+    solutionLocation: solutionLocation
+  }
+} 
 
-// // ========== Azure OpenAI ========== //
-// module azOpenAI 'deploy_azure_open_ai.bicep' = {
-//   name: 'deploy_azure_open_ai'
-//   params: {
-//     solutionName: solutionPrefix
-//     solutionLocation: solutionLocation
-//   }
-// }
+// ========== Azure OpenAI ========== //
+module azOpenAI 'deploy_azure_open_ai.bicep' = {
+  name: 'deploy_azure_open_ai'
+  params: {
+    solutionName: solutionPrefix
+    solutionLocation: solutionLocation
+  }
+}
 
 module uploadFiles 'deploy_upload_files_script.bicep' = {
   name : 'deploy_upload_files_script'
@@ -78,35 +78,35 @@ module uploadFiles 'deploy_upload_files_script.bicep' = {
   dependsOn:[storageAccountModule]
 }
 
-// // ========== Key Vault ========== //
-// module keyvaultModule 'deploy_keyvault.bicep' = {
-//   name: 'deploy_keyvault'
-//   params: {
-//     solutionName: solutionPrefix
-//     solutionLocation: solutionLocation
-//     objectId: managedIdentityModule.outputs.managedIdentityOutput.objectId
-//     tenantId: subscription().tenantId
-//     managedIdentityObjectId:managedIdentityModule.outputs.managedIdentityOutput.objectId
-//     clientId:clientId
-//     clientSecret:clientSecret
-//     environmentUrl:environmentUrl
-//     environmentId:environmentId
-//     adlsAccountName:storageAccountModule.outputs.storageAccountOutput.storageAccountName
-//     adlsStoreName:storageAccountModule.outputs.storageAccountOutput.storageAccountName
-//     openApiType:'azure'
-//     azureOpenAIApiKey:azOpenAI.outputs.openAIOutput.openAPIKey
-//     azureOpenAIApiVersion:'2023-07-01-preview'
-//     azureOpenAIEndpoint:azOpenAI.outputs.openAIOutput.openAPIEndpoint
-//     azureSearchAdminKey:azSearchService.outputs.searchServiceOutput.searchServiceAdminKey
-//     azureSearchServiceEndpoint:azSearchService.outputs.searchServiceOutput.searchServiceEndpoint
-//     cogServiceEndpoint:azAIMultiServiceAccount.outputs.cogSearchOutput.cogServiceEndpoint
-//     cogServiceName:azAIMultiServiceAccount.outputs.cogSearchOutput.cogServiceName
-//     cogServiceKey:azAIMultiServiceAccount.outputs.cogSearchOutput.cogServiceKey
-//     enableSoftDelete:false
-//   }
-//   scope: resourceGroup(resourceGroup().name)
-//   dependsOn:[storageAccountModule,azOpenAI,azAIMultiServiceAccount,azSearchService]
-// }
+// ========== Key Vault ========== //
+module keyvaultModule 'deploy_keyvault.bicep' = {
+  name: 'deploy_keyvault'
+  params: {
+    solutionName: solutionPrefix
+    solutionLocation: solutionLocation
+    objectId: managedIdentityModule.outputs.managedIdentityOutput.objectId
+    tenantId: subscription().tenantId
+    managedIdentityObjectId:managedIdentityModule.outputs.managedIdentityOutput.objectId
+    // clientId:clientId
+    // clientSecret:clientSecret
+    // environmentUrl:environmentUrl
+    // environmentId:environmentId
+    adlsAccountName:storageAccountModule.outputs.storageAccountOutput.storageAccountName
+    adlsStoreName:storageAccountModule.outputs.storageAccountOutput.storageAccountName
+    openApiType:'azure'
+    azureOpenAIApiKey:azOpenAI.outputs.openAIOutput.openAPIKey
+    azureOpenAIApiVersion:'2023-07-01-preview'
+    azureOpenAIEndpoint:azOpenAI.outputs.openAIOutput.openAPIEndpoint
+    azureSearchAdminKey:azSearchService.outputs.searchServiceOutput.searchServiceAdminKey
+    azureSearchServiceEndpoint:azSearchService.outputs.searchServiceOutput.searchServiceEndpoint
+    cogServiceEndpoint:azAIMultiServiceAccount.outputs.cogSearchOutput.cogServiceEndpoint
+    cogServiceName:azAIMultiServiceAccount.outputs.cogSearchOutput.cogServiceName
+    cogServiceKey:azAIMultiServiceAccount.outputs.cogSearchOutput.cogServiceKey
+    enableSoftDelete:false
+  }
+  scope: resourceGroup(resourceGroup().name)
+  dependsOn:[storageAccountModule,azOpenAI,azAIMultiServiceAccount,azSearchService]
+}
 
 // module createIndex 'deploy_python_scripts.bicep' = {
 //   name : 'deploy_python_scripts'
