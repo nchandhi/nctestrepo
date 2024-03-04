@@ -7,7 +7,7 @@ storageAccount="$1"
 fileSystem="$2"
 accountKey="$3"
 baseUrl="$4"
-zipUrl=${baseUrl}"Deployment/Data/demo_data.zip"
+zipUrl=${baseUrl}"Deployment/data/demo_data.zip"
 
 
 # Download the zip file
