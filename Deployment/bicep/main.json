@@ -1209,7 +1209,7 @@
               },
               "properties": {
                 "azCliVersion": "2.52.0",
-                "primaryScriptUri": "[format('{0}deployment/scripts/run_python_scripts.sh', parameters('baseUrl'))]",
+                "primaryScriptUri": "[format('{0}Deployment/scripts/run_python_scripts.sh', parameters('baseUrl'))]",
                 "arguments": "[format('{0} {1}', parameters('baseUrl'), parameters('keyVaultName'))]",
                 "timeout": "PT1H",
                 "retentionInterval": "PT1H",

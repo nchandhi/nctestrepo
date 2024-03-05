@@ -5,13 +5,13 @@ echo "started the script"
 baseUrl="$1"
 keyvaultName="$2"
 requirementFile="requirements.txt"
-requirementFileUrl=${baseUrl}"deployment/scripts/python_script/requirements.txt"
+requirementFileUrl=${baseUrl}"Deployment/scripts/python_script/requirements.txt"
 
 echo "Download Started"
 
 # Download the create_index.py file
-curl --output "create_articles_index.py" ${baseUrl}"deployment/scripts/python_script/create_articles_index.py"
-curl --output "create_grants_index.py" ${baseUrl}"deployment/scripts/python_script/create_grants_index.py"
+curl --output "create_articles_index.py" ${baseUrl}"Deployment/scripts/python_script/create_articles_index.py"
+curl --output "create_grants_index.py" ${baseUrl}"Deployment/scripts/python_script/create_grants_index.py"
 
 # Download the requirement file
 curl --output "$requirementFile" "$requirementFileUrl"
