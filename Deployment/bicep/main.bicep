@@ -94,6 +94,7 @@ module keyvaultModule 'deploy_keyvault.bicep' = {
     tenantId: subscription().tenantId
     managedIdentityObjectId:managedIdentityModule.outputs.managedIdentityOutput.objectId
     adlsAccountName:storageAccountModule.outputs.storageAccountOutput.storageAccountName
+    adlsAccountKey:storageAccountModule.outputs.storageAccountOutput.storageAccountKey
     adlsStoreName:storageAccountModule.outputs.storageAccountOutput.storageAccountName
     openApiType:'azure'
     azureOpenAIApiKey:azOpenAI.outputs.openAIOutput.openAPIKey

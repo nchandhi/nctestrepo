@@ -69,6 +69,8 @@ param managedIdentityObjectId string
 // param environmentUrl string
 // param environmentId string
 param adlsAccountName string
+@secure()
+param adlsAccountKey string
 param adlsStoreName string
 @secure()
 param azureOpenAIApiKey string
@@ -180,7 +182,7 @@ resource roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
 
 resource tenantIdEntry 'Microsoft.KeyVault/vaults/secrets@2021-11-01-preview' = {
   parent: keyVault
-  name: 'TEANT-ID'
+  name: 'TENANT-ID'
   properties: {
     value: tenantId
   }
@@ -191,6 +193,14 @@ resource adlsAccountNameEntry 'Microsoft.KeyVault/vaults/secrets@2021-11-01-prev
   name: 'ADLS-ACCOUNT-NAME'
   properties: {
     value: adlsAccountName
+  }
+}
+
+resource adlsAccountKeyEntry 'Microsoft.KeyVault/vaults/secrets@2021-11-01-preview' = {
+  parent: keyVault
+  name: 'ADLS-ACCOUNT-KEY'
+  properties: {
+    value: adlsAccountKey
   }
 }
 

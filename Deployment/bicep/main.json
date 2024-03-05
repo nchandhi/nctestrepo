@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.25.53.49325",
-      "templateHash": "17304996846747936748"
+      "templateHash": "2095689059134938419"
     }
   },
   "parameters": {
@@ -681,6 +681,9 @@
           "adlsAccountName": {
             "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_storage_account.bicep'), '2022-09-01').outputs.storageAccountOutput.value.storageAccountName]"
           },
+          "adlsAccountKey": {
+            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_storage_account.bicep'), '2022-09-01').outputs.storageAccountOutput.value.storageAccountKey]"
+          },
           "adlsStoreName": {
             "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_storage_account.bicep'), '2022-09-01').outputs.storageAccountOutput.value.storageAccountName]"
           },
@@ -722,7 +725,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.25.53.49325",
-              "templateHash": "2551298524570175747"
+              "templateHash": "9343788458881547376"
             }
           },
           "parameters": {
@@ -847,6 +850,9 @@
             "adlsAccountName": {
               "type": "string"
             },
+            "adlsAccountKey": {
+              "type": "securestring"
+            },
             "adlsStoreName": {
               "type": "string"
             },
@@ -943,7 +949,7 @@
             {
               "type": "Microsoft.KeyVault/vaults/secrets",
               "apiVersion": "2021-11-01-preview",
-              "name": "[format('{0}/{1}', parameters('kvName'), 'TEANT-ID')]",
+              "name": "[format('{0}/{1}', parameters('kvName'), 'TENANT-ID')]",
               "properties": {
                 "value": "[parameters('tenantId')]"
               },
@@ -957,6 +963,17 @@
               "name": "[format('{0}/{1}', parameters('kvName'), 'ADLS-ACCOUNT-NAME')]",
               "properties": {
                 "value": "[parameters('adlsAccountName')]"
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.KeyVault/vaults', parameters('kvName'))]"
+              ]
+            },
+            {
+              "type": "Microsoft.KeyVault/vaults/secrets",
+              "apiVersion": "2021-11-01-preview",
+              "name": "[format('{0}/{1}', parameters('kvName'), 'ADLS-ACCOUNT-KEY')]",
+              "properties": {
+                "value": "[parameters('adlsAccountKey')]"
               },
               "dependsOn": [
                 "[resourceId('Microsoft.KeyVault/vaults', parameters('kvName'))]"
