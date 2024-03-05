@@ -359,7 +359,7 @@ for path in paths:
    
     text = "" 
 
-    n = 2 #len(pdf_reader.pages)
+    n = 10 #len(pdf_reader.pages)
     if len(pdf_reader.pages) < 10:
         n = len(pdf_reader.pages)
     for page_num in range(n): #range(len(pdf_reader.pages)):
@@ -424,7 +424,6 @@ for path in paths:
                 result = client.upload_documents(documents=docs)
                 docs = []
                 print(f' {str(counter)} uploaded')
-    break
 #upload the last batch
 if docs != []:
     client.upload_documents(documents=docs)
