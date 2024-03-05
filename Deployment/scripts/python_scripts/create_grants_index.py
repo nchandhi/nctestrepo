@@ -354,7 +354,7 @@ for path in paths:
     filename = path.name.split('/')[-1]
     grant_id = filename.replace('.pdf','')
 
-    df_file_metadata = df_metadata[df_metadata['grant_id']==int(grant_id)].iloc[0]
+    df_file_metadata = df_metadata[df_metadata['grant_id']==grant_id].iloc[0]
    
     text = "" 
 
