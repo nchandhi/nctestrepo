@@ -33,6 +33,38 @@ module appServicePlan '1_depoy_appservice_plan.bicep' = {
   }
 }
 
+param backendServiceName string = ''
+// Used for the Azure AD application
+param authClientId string
+@secure()
+param authClientSecret string
+
+// The application frontend
+var appServiceName = !empty(backendServiceName) ? backendServiceName : 'app-backend-${resourceToken}'
+var authIssuerUri = '${environment().authentication.loginEndpoint}${tenant().tenantId}/v2.0'
+module backend '1_deploy_appservice.bicep' = {
+  name: 'web'
+  scope: resourceGroup(resourceGroup().name)
+  params: {
+    name: appServiceName
+    location: solutionLocation
+    tags: union(tags, { 'azd-service-name': 'backend' })
+    appServicePlanId: appServicePlan.outputs.id
+    runtimeName: 'python'
+    runtimeVersion: '3.10'
+    scmDoBuildDuringDeployment: true
+    managedIdentity: true
+    authClientSecret: authClientSecret
+    authClientId: authClientId
+    authIssuerUri: authIssuerUri
+    appSettings: {
+      // search
+      AZURE_SEARCH_INDEX: 'testsearchindex'
+    }
+  }
+}
+
+
 // // ========== Managed Identity ========== //
 // module managedIdentityModule 'deploy_managed_identity.bicep' = {
 //   name: 'deploy_managed_identity'
