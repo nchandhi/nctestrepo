@@ -2,6 +2,8 @@
 
 key_vault_name = 'to-be-replaced'
 
+key_vault_name = 'nc3057-kv-eys2hcrukoi4o'
+
 #hardcoded values
 index_name = "grantsinfluenza"
 file_system_client = "data"
@@ -358,7 +360,7 @@ for path in paths:
    
     text = "" 
 
-    n = 2 #len(pdf_reader.pages)
+    n =  #len(pdf_reader.pages)
     if len(pdf_reader.pages) < 10:
         n = len(pdf_reader.pages)
     for page_num in range(n): #range(len(pdf_reader.pages)):
@@ -374,8 +376,8 @@ for path in paths:
             d = {
                 "chunk_id" : path.name.split('/')[-1] + '_' + str(page_num).zfill(2) +  '_' + str(chunk_num).zfill(2),
                 "grant_id": str(df_file_metadata['grant_id']),
-                 "content": chunk,       
-                 "title": df_file_metadata['title'] } 
+                "content": chunk,       
+                "title": df_file_metadata['title'] } 
 
             d["dateTime"],d["Person"],d["Location"],d["Organization"],d["URL"],d["Email"],d["PersonType"],d["Event"],d["Quantity"] = get_named_entities(cog_services_client,d["content"])
 
@@ -401,7 +403,7 @@ for path in paths:
                     "grant_id": d["grant_id"],
                     "title": d["title"],
                     "content": d["content"],
-                    "sourceurl": path.name.split('/'),
+                    "sourceurl": path.name.split('/')[-1],
                     "publicurl": public_url,
                     "dateTime": d["dateTime"],
                     "Person": d["Person"],
@@ -416,7 +418,7 @@ for path in paths:
                     "contentVector": v_contentVector
             }
             )
-            
+               
             if counter % 10 == 0:
                 result = client.upload_documents(documents=docs)
                 docs = []
