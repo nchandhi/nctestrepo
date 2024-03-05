@@ -218,9 +218,8 @@ index_client = SearchIndexClient(
 fields = [
     SimpleField(name="id", type=SearchFieldDataType.String, key=True, sortable=True, filterable=True, facetable=True),
     SearchableField(name="chunk_id", type=SearchFieldDataType.String),
-    SearchableField(name="pubmed_id", type=SearchFieldDataType.String),
+    SearchableField(name="grant_id", type=SearchFieldDataType.String),
     SearchableField(name="title", type=SearchFieldDataType.String),
-    SearchableField(name="abstract", type=SearchFieldDataType.String),
     SearchableField(name="content", type=SearchFieldDataType.String),
     SearchableField(name="sourceurl", type=SearchFieldDataType.String),
     SearchableField(name="publicurl", type=SearchFieldDataType.String),
@@ -353,9 +352,9 @@ for path in paths:
     pdf_file.readinto(stream)
     pdf_reader = PyPDF2.PdfReader(stream)
     filename = path.name.split('/')[-1]
-    pubmedid = filename.replace('.pdf','')
+    grant_id = filename.replace('.pdf','')
 
-    df_file_metadata = df_metadata[df_metadata['pubmed_id']==int(pubmedid)].iloc[0]
+    df_file_metadata = df_metadata[df_metadata['grant_id']==int(grant_id)].iloc[0]
    
     text = "" 
 
@@ -374,10 +373,9 @@ for path in paths:
             chunk_num += 1
             d = {
                 "chunk_id" : path.name.split('/')[-1] + '_' + str(page_num).zfill(2) +  '_' + str(chunk_num).zfill(2),
-                "pubmed_id": str(df_file_metadata['pubmed_id']),
+                "grant_id": str(df_file_metadata['grant_id']),
                  "content": chunk,       
-                 "title": df_file_metadata['title'],
-                 "abstract": df_file_metadata['abstract'] } #path.name.split('/')[-1] + '_' + str(page_num).zfill(2) +  '_' + str(chunk_num).zfill(2)} 
+                 "title": df_file_metadata['title'] } 
 
             d["dateTime"],d["Person"],d["Location"],d["Organization"],d["URL"],d["Email"],d["PersonType"],d["Event"],d["Quantity"] = get_named_entities(cog_services_client,d["content"])
 
@@ -400,12 +398,11 @@ for path in paths:
             {
                     "id": base64.urlsafe_b64encode(bytes(d["chunk_id"], encoding='utf-8')).decode('utf-8'),
                     "chunk_id": d["chunk_id"],
-                    "pubmed_id": d["pubmed_id"],
+                    "grant_id": d["grant_id"],
                     "title": d["title"],
-                    "abstract": d["abstract"],
                     "content": d["content"],
-                    "sourceurl": path.name.split('/')[-1], #d["url"],
-                    "publicurl": public_url, #d["url"],
+                    "sourceurl": path.name.split('/'),
+                    "publicurl": public_url,
                     "dateTime": d["dateTime"],
                     "Person": d["Person"],
                     "Location": d["Location"],
