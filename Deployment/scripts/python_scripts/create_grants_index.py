@@ -6,7 +6,7 @@ key_vault_name = 'to-be-replaced'
 index_name = "grantsinfluenza"
 file_system_client = "data"
 directory = 'demodata/nih_grants' 
-csv_file_name = 'metadata/nih_grants.csv'
+csv_file_name = '/metadata/nih_grants.csv'
 
 from azure.keyvault.secrets import SecretClient  
 from azure.identity import DefaultAzureCredential  
