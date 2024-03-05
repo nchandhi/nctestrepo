@@ -111,16 +111,17 @@ module keyvaultModule 'deploy_keyvault.bicep' = {
   dependsOn:[storageAccountModule,azOpenAI,azAIMultiServiceAccount,azSearchService]
 }
 
-// module createIndex 'deploy_python_scripts.bicep' = {
-//   name : 'deploy_python_scripts'
-//   params:{
-//     solutionLocation: solutionLocation
-//     identity:managedIdentityModule.outputs.managedIdentityOutput.id
-//     baseUrl:baseUrl
-//     keyVaultName:keyvaultModule.outputs.keyvaultOutput.name
-//   }
-//   dependsOn:[keyvaultModule]
-// }
+module createIndex 'deploy_python_scripts.bicep' = {
+  name : 'deploy_python_scripts'
+  params:{
+    solutionLocation: solutionLocation
+    identity:managedIdentityModule.outputs.managedIdentityOutput.id
+    baseUrl:baseUrl
+    keyVaultName:keyvaultModule.outputs.keyvaultOutput.name
+  }
+  dependsOn:[keyvaultModule]
+}
+
 // module deployPVA 'deploy_pva_sol.bicep' = {
 //   name : 'deploy_pva_sol'
 //   params:{

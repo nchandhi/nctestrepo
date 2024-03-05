@@ -3,10 +3,10 @@
 key_vault_name = 'to-be-replaced'
 
 #hardcoded values
-index_name = "pubmedinfluenza"
+index_name = "grantsinfluenza"
 file_system_client = "data"
-directory = 'sampledata/pubmed_articles' 
-csv_file_name = 'pubmed_articles.csv'
+directory = 'sampledata/nih_grants' 
+csv_file_name = 'nih_grants.csv'
 
 from azure.keyvault.secrets import SecretClient  
 from azure.identity import DefaultAzureCredential  
