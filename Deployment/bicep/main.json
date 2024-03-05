@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.25.53.49325",
-      "templateHash": "2095689059134938419"
+      "templateHash": "691321462321705599"
     }
   },
   "parameters": {
@@ -682,7 +682,7 @@
             "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_storage_account.bicep'), '2022-09-01').outputs.storageAccountOutput.value.storageAccountName]"
           },
           "adlsAccountKey": {
-            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_storage_account.bicep'), '2022-09-01').outputs.storageAccountOutput.value.storageAccountKey]"
+            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_storage_account.bicep'), '2022-09-01').outputs.storageAccountOutput.value.key]"
           },
           "adlsStoreName": {
             "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, resourceGroup().name), 'Microsoft.Resources/deployments', 'deploy_storage_account.bicep'), '2022-09-01').outputs.storageAccountOutput.value.storageAccountName]"

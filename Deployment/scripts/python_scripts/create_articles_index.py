@@ -1,7 +1,7 @@
 #Get Azure Key Vault Client
 
 key_vault_name = 'to-be-replaced'
-key_vault_name = 'nc3043-kv-vmyfdqcjnufhu'
+key_vault_name = 'nc0305-kv-rhpz2pbvgb65i'
 
 #hardcoded values
 index_name = "pubmedinfluenza"
@@ -18,6 +18,8 @@ def get_secrets_from_kv(kv_name, secret_name):
     
   # Create a credential object using the default Azure credentials  
   credential = DefaultAzureCredential()
+#   from azure.identity import ManagedIdentityCredential
+#   credential = ManagedIdentityCredential(client_id="2a1ee089-006a-46e6-9a74-51f37fa7dcb0")
 
     # Create a secret client object using the credential and Key Vault name  
   secret_client = SecretClient(vault_url=f"https://{key_vault_name}.vault.azure.net/", credential=credential)  
@@ -306,6 +308,7 @@ import pandas as pd
 
 
 account_name = get_secrets_from_kv(key_vault_name, "ADLS-ACCOUNT-NAME")
+account_key = get_secrets_from_kv(key_vault_name, "ADLS-ACCOUNT-KEY")
 # tenant_id = get_secrets_from_kv(key_vault_name, "TENANT-ID")
 # client_id = get_secrets_from_kv(key_vault_name, "SPN-CLIENTID")  
 # client_secret = get_secrets_from_kv(key_vault_name, "SPN-CLIENTSECRET") 
@@ -315,11 +318,11 @@ account_url = f"https://{account_name}.dfs.core.windows.net"
 # adls_credential = DefaultAzureCredential()
 
 
-from azure.identity import ManagedIdentityCredential
-# Can also specify a client ID of a user-assigned managed identity
-adls_credential = ManagedIdentityCredential(client_id="9925306a-77ec-43bb-8f1f-7c5cd3ad8a6b", authority="https://login.microsoftonline.com/19b29b25-a38c-443f-bc1f-e0aaf8e55116")
+# from azure.identity import ManagedIdentityCredential
+# # Can also specify a client ID of a user-assigned managed identity
+# adls_credential = ManagedIdentityCredential(client_id="9925306a-77ec-43bb-8f1f-7c5cd3ad8a6b", authority="https://login.microsoftonline.com/19b29b25-a38c-443f-bc1f-e0aaf8e55116")
 
-service_client = DataLakeServiceClient(account_url, credential=adls_credential,api_version='2023-01-03') 
+service_client = DataLakeServiceClient(account_url, credential=account_key,api_version='2023-01-03') 
 
 
 file_system_client = service_client.get_file_system_client(file_system_client)  
