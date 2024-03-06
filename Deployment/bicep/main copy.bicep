@@ -12,62 +12,6 @@ var solutionLocation = resourceGroup().location
 var baseUrl = 'https://raw.githubusercontent.com/nchandhi/nctestrepo/main/' //'https://github.com/nchandhi/nctestrepo/blob/main/' //'https://tmpstrgtst.blob.core.windows.net/'
 
 
-// Parameters
-@minLength(2)
-@maxLength(12)
-@description('Name for the AI resource and used to derive name of dependent resources.')
-param aiResourceName string = 'nc-byc-ai'
-
-@description('Friendly name for your Azure AI resource')
-param aiResourceFriendlyName string = 'Demo AI resource'
-
-@description('Description of your Azure AI resource dispayed in AI studio')
-param aiResourceDescription string = 'This is an example AI resource for use in Azure AI Studio.'
-
-@description('Azure region used for the deployment of all resources.')
-param location string = resourceGroup().location
-
-@description('Set of tags to apply to all resources.')
-param tags object = {}
-
-// Variables
-var name = toLower('${aiResourceName}')
-
-// // Create a short, unique suffix, that will be unique to each resource group
-// var uniqueSuffix = substring(uniqueString(resourceGroup().id), 0, 4)
-
-// Dependent resources for the Azure Machine Learning workspace
-module aiDependencies '2_deploy_ai_hub_dep.bicep' = {
-  name: 'dependencies-${name}-${solutionPrefix}-deployment'
-  params: {
-    location: location
-    storageName: 'st${name}${solutionPrefix}'
-    keyvaultName: 'kv-${name}-${solutionPrefix}'
-    applicationInsightsName: 'appi-${name}-${solutionPrefix}'
-    containerRegistryName: 'cr${name}${solutionPrefix}'
-    tags: tags
-  }
-}
-
-module aiResource '2_deploy_ai_hub.bicep' = {
-  name: 'ai-${name}-${solutionPrefix}-deployment'
-  params: {
-    // workspace organization
-    aiResourceName: 'ai-${name}-${solutionPrefix}'
-    aiResourceFriendlyName: aiResourceFriendlyName
-    aiResourceDescription: aiResourceDescription
-    location: location
-    tags: tags
-
-    // dependent resources
-    applicationInsightsId: aiDependencies.outputs.applicationInsightsId
-    containerRegistryId: aiDependencies.outputs.containerRegistryId
-    keyVaultId: aiDependencies.outputs.keyvaultId
-    storageAccountId: aiDependencies.outputs.storageId
-
-  }
-}
-
 // param appServicePlanName string = ''
 // var resourceToken = toLower(uniqueString(subscription().id, solutionPrefix, solutionLocation))
 // var tags = { 'azd-env-name': solutionPrefix }
